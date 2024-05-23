@@ -4,11 +4,10 @@ import java.util.Scanner;
 public class TheSystem {
 
     //必要变量
-    private String input;
 
     //必要对象
     Scanner sc = new Scanner(System.in);
-    ArrayList<Goods> goods = new ArrayList<Goods>();
+    ArrayList<Goods> goods = new ArrayList<>();
 
     public TheSystem() {
     }
@@ -35,10 +34,11 @@ public class TheSystem {
                     break;
                 case 4:
                     //修改商品信息
-
+                    Tools.editGoodsInfo(goods);
                     break;
                 case 5:
                     //计算商品价值总和
+                    Tools.calculateTotalPrice(goods);
                     break;
                 case 6:
                     //退出系统

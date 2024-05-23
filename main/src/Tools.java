@@ -85,7 +85,6 @@ public class Tools {
     public static void showGoodsInfo(ArrayList<Goods> goods){
         Scanner sc = new Scanner(System.in);
         String input;
-        int choice;
 
         //判断当前系统中是否存在商品信息
         if(goods.isEmpty()){
@@ -116,7 +115,81 @@ public class Tools {
 
     //修改商品信息
     public static void editGoodsInfo(ArrayList<Goods> goods){
+        Scanner sc = new Scanner(System.in);
+        String input;
+        int choice;
+
         //判断当前系统中是否存在商品信息
+        if(goods.isEmpty()){
+            //输出日志
+            System.out.println("当前系统中没有任何商品信息");
+            return;
+        }
+        //当前系统中存在商品信息
+        System.out.println("请输入商品编号");
+        input = sc.next();
+        for (int i = 0; i < goods.size(); i++) {
+            if(goods.get(i).getNumber().equals(input)){
+                //找到对应商品信息
+                while (true) {
+                    System.out.println("已选中：" + goods.get(i).getGoodsName() + "\t商品编号：" + goods.get(i).getNumber());
+                    printEditGoodsInfo();   //打印修改商品信息菜单
+                    choice = sc.nextInt();
+                    switch(choice){
+                        case 1:
+                            //修改商品名
+                            System.out.println("请输入商品名");
+                            goods.get(i).setGoodsName(sc.next());
+                            return;
+                        case 2:
+                            //修改商品价格
+                            System.out.println("请输入商品价格");
+                            goods.get(i).setPrice(sc.nextDouble());
+                            return;
+                        case 3:
+                            //修改商品数量
+                            System.out.println("请输入商品数量");
+                            goods.get(i).setQuantity(sc.nextInt());
+                            return;
+                        case 4:
+                            //修改商品入库日期
+                            System.out.println("请输入入库年份");
+                            goods.get(i).setYear(sc.nextInt());
+                            System.out.println("请输入入库月份");
+                            goods.get(i).setMonth(sc.nextInt());
+                            System.out.println("请输入入库日期");
+                            goods.get(i).setDay(sc.nextInt());
+                            return;
+                        case 5:
+                            //返回
+                            return;
+                        default:
+                            //输入有误
+                            System.out.println("输入有误");
+                            break;
+                    }
+                }
+            }
+        }
+
+    }
+
+    //计算商品价值总和
+    public static void calculateTotalPrice(ArrayList<Goods> goods){
+        double totalPrice = 0;
+
+        //判断当前系统是否存在商品信息
+        if(goods.isEmpty()){
+            //输出日志
+            System.out.println("当前系统中没有任何商品信息");
+            return;
+        }
+
+        //系统中存在商品信息
+        for (int i = 0; i < goods.size(); i++) {
+            totalPrice += goods.get(i).getPrice() * goods.get(i).getQuantity();
+        }
+        System.out.println("所有商品价值总和：" + totalPrice + "元");
     }
 
     //生成商品编号
@@ -150,7 +223,14 @@ public class Tools {
 
     //打印修改商品信息菜单
     private static void printEditGoodsInfo(){
-        System.out.println("");
-
+        System.out.println("===修改商品信息===");
+        System.out.print("""
+                1.修改商品名
+                2.修改商品价格
+                3.修改商品数量
+                4.修改商品入库日期
+                5.返回
+                """);
+        System.out.println("请选择：");
     }
 }
